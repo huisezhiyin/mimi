@@ -22,6 +22,11 @@
 		000000000000000000000010 /* ScreenChangeMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000117 /* ScreenChangeMonitorService.swift */; };
 		000000000000000000000011 /* GenerationSessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000118 /* GenerationSessionCoordinator.swift */; };
 		000000000000000000000012 /* TraceCodexProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000119 /* TraceCodexProvider.swift */; };
+		000000000000000000000013 /* ExpressionPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000120 /* ExpressionPreset.swift */; };
+		000000000000000000000014 /* ExpressionPresetResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000121 /* ExpressionPresetResolver.swift */; };
+		000000000000000000000015 /* ExpressionRuntimeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000122 /* ExpressionRuntimeState.swift */; };
+		000000000000000000000016 /* ExpressionTextProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000123 /* ExpressionTextProvider.swift */; };
+		000000000000000000000017 /* OpenAICompatibleBubbleTextService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000124 /* OpenAICompatibleBubbleTextService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +50,11 @@
 		000000000000000000000117 /* ScreenChangeMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/ScreenChangeMonitorService.swift; sourceTree = "<group>"; };
 		000000000000000000000118 /* GenerationSessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/GenerationSessionCoordinator.swift; sourceTree = "<group>"; };
 		000000000000000000000119 /* TraceCodexProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/TraceCodexProvider.swift; sourceTree = "<group>"; };
+		000000000000000000000120 /* ExpressionPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Character/ExpressionPreset.swift; sourceTree = "<group>"; };
+		000000000000000000000121 /* ExpressionPresetResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Character/ExpressionPresetResolver.swift; sourceTree = "<group>"; };
+		000000000000000000000122 /* ExpressionRuntimeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Character/ExpressionRuntimeState.swift; sourceTree = "<group>"; };
+		000000000000000000000123 /* ExpressionTextProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Character/ExpressionTextProvider.swift; sourceTree = "<group>"; };
+		000000000000000000000124 /* OpenAICompatibleBubbleTextService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/OpenAICompatibleBubbleTextService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +114,10 @@
 		000000000000000000000205 /* Character */ = {
 			isa = PBXGroup;
 			children = (
+				000000000000000000000120 /* ExpressionPreset.swift */,
+				000000000000000000000121 /* ExpressionPresetResolver.swift */,
+				000000000000000000000122 /* ExpressionRuntimeState.swift */,
+				000000000000000000000123 /* ExpressionTextProvider.swift */,
 				000000000000000000000106 /* PetView.swift */,
 			);
 			name = Character;
@@ -119,6 +133,7 @@
 				000000000000000000000117 /* ScreenChangeMonitorService.swift */,
 				000000000000000000000118 /* GenerationSessionCoordinator.swift */,
 				000000000000000000000119 /* TraceCodexProvider.swift */,
+				000000000000000000000124 /* OpenAICompatibleBubbleTextService.swift */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -231,6 +246,11 @@
 				000000000000000000000010 /* ScreenChangeMonitorService.swift in Sources */,
 				000000000000000000000011 /* GenerationSessionCoordinator.swift in Sources */,
 				000000000000000000000012 /* TraceCodexProvider.swift in Sources */,
+				000000000000000000000013 /* ExpressionPreset.swift in Sources */,
+				000000000000000000000014 /* ExpressionPresetResolver.swift in Sources */,
+				000000000000000000000015 /* ExpressionRuntimeState.swift in Sources */,
+				000000000000000000000016 /* ExpressionTextProvider.swift in Sources */,
+				000000000000000000000017 /* OpenAICompatibleBubbleTextService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let companionStateMachine = CompanionStateMachine()
     private let screenChangeMonitorService = ScreenChangeMonitorService()
     private let traceCodexProvider = TraceCodexProvider()
+    private lazy var expressionTextProvider: ExpressionTextProvider? = OpenAICompatibleBubbleTextService.fromEnvironment()
     private lazy var generationSessionCoordinator = GenerationSessionCoordinator(providers: [traceCodexProvider])
     private var menuBarController: MenuBarController?
     private var petWindowController: PetWindowController?
@@ -38,7 +39,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         let menuBarController = MenuBarController()
-        let petWindowController = PetWindowController()
+        let petWindowController = PetWindowController(textProvider: expressionTextProvider)
 
         menuBarController.onRefreshStatus = { [weak self] in
             self?.refreshPermissionStatus(promptIfNeeded: false)

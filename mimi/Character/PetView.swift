@@ -1,24 +1,8 @@
 import AppKit
 
 final class PetView: NSView {
-    private struct EyeStyle {
-        let leftEyeRect: NSRect
-        let rightEyeRect: NSRect
-        let pupilSize: NSSize
-        let maxOffsetX: CGFloat
-        let maxOffsetY: CGFloat
-        let pupilColor: NSColor
-        let lidOverlayHeight: CGFloat
-        let sparkleAlpha: CGFloat
-    }
-
-    private enum MouthStyle {
-        case focused
-        case curiousClosed
-        case curiousOpen
-        case softSmile
-        case resting
-    }
+    private let expressionPresetResolver = ExpressionPresetResolver()
+    private let expressionRuntimeState: ExpressionRuntimeState
 
     var permissionGranted = false {
         didSet {
@@ -60,14 +44,39 @@ final class PetView: NSView {
         true
     }
 
+    private struct BubbleAppearance {
+        let fillColor: NSColor
+        let strokeColor: NSColor
+        let textColor: NSColor
+        let borderWidth: CGFloat
+    }
+
+    override init(frame frameRect: NSRect) {
+        self.expressionRuntimeState = ExpressionRuntimeState()
+        super.init(frame: frameRect)
+        configureExpressionRuntimeState()
+    }
+
+    init(frame frameRect: NSRect, textProvider: ExpressionTextProvider?) {
+        self.expressionRuntimeState = ExpressionRuntimeState(textProvider: textProvider)
+        super.init(frame: frameRect)
+        configureExpressionRuntimeState()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func draw(_ dirtyRect: NSRect) {
         NSColor.clear.setFill()
         dirtyRect.fill()
 
-        drawTail()
-        drawFace()
-        drawSpeechBubble()
-        drawEyes()
+        let preset = resolveExpressionPreset()
+        drawTail(using: preset)
+        drawFace(using: preset)
+        drawSpeechBubble(using: preset)
+        drawEyes(using: preset)
         drawStatusBadge()
         drawTrackingBadge()
         drawStateBadge()
@@ -75,35 +84,29 @@ final class PetView: NSView {
         drawMappedTarget()
     }
 
-    private func drawTail() {
+    private func drawTail(using preset: ExpressionPreset) {
         let tail = NSBezierPath()
-        tail.lineWidth = hasActiveGenerationPerformance ? 20 : 18
-        let tailColor = hasActiveGenerationPerformance
-            ? NSColor(calibratedRed: 0.92, green: 0.72, blue: 0.41, alpha: 0.98)
-            : NSColor(calibratedRed: 0.86, green: 0.64, blue: 0.38, alpha: 0.95)
-        tailColor.setStroke()
+        tail.lineWidth = preset.tail.lineWidth
+        preset.tail.strokeColor.setStroke()
         tail.move(to: NSPoint(x: 146, y: 136))
-        let endPoint = hasActiveGenerationPerformance ? NSPoint(x: 202, y: 42) : NSPoint(x: 200, y: 60)
-        let controlPoint1 = hasActiveGenerationPerformance ? NSPoint(x: 186, y: 118) : NSPoint(x: 184, y: 128)
-        let controlPoint2 = hasActiveGenerationPerformance ? NSPoint(x: 218, y: 82) : NSPoint(x: 214, y: 102)
-        tail.curve(to: endPoint, controlPoint1: controlPoint1, controlPoint2: controlPoint2)
+        tail.curve(
+            to: preset.tail.endPoint,
+            controlPoint1: preset.tail.controlPoint1,
+            controlPoint2: preset.tail.controlPoint2
+        )
         tail.stroke()
     }
 
-    private func drawFace() {
-        let earTipY: CGFloat = hasActiveGenerationPerformance ? 8 : 16
-        let leftEarPeakX: CGFloat = generationPhase == .streaming ? 102 : 96
-        let rightEarPeakX: CGFloat = generationPhase == .streaming ? 166 : 172
-
+    private func drawFace(using preset: ExpressionPreset) {
         let leftEar = NSBezierPath()
         leftEar.move(to: NSPoint(x: 68, y: 78))
-        leftEar.line(to: NSPoint(x: leftEarPeakX, y: earTipY))
+        leftEar.line(to: NSPoint(x: preset.ears.leftEarPeakX, y: preset.ears.earTipY))
         leftEar.line(to: NSPoint(x: 116, y: 88))
         leftEar.close()
 
         let rightEar = NSBezierPath()
         rightEar.move(to: NSPoint(x: 152, y: 88))
-        rightEar.line(to: NSPoint(x: rightEarPeakX, y: earTipY))
+        rightEar.line(to: NSPoint(x: preset.ears.rightEarPeakX, y: preset.ears.earTipY))
         rightEar.line(to: NSPoint(x: 104, y: 78))
         rightEar.close()
 
@@ -120,37 +123,44 @@ final class PetView: NSView {
         NSBezierPath(ovalIn: NSRect(x: 72, y: 106, width: 76, height: 58)).fill()
     }
 
-    private func drawSpeechBubble() {
-        guard let bubbleText else {
+    private func drawSpeechBubble(using preset: ExpressionPreset) {
+        guard let bubblePresentation = bubblePresentation(for: preset) else {
             return
         }
 
+        let appearance = bubbleAppearance(for: bubblePresentation.style)
         let bubbleRect = NSRect(x: 126, y: 18, width: 70, height: 28)
         let bubble = NSBezierPath(roundedRect: bubbleRect, xRadius: 14, yRadius: 14)
-        NSColor.white.withAlphaComponent(0.92).setFill()
+        bubble.lineWidth = appearance.borderWidth
+        appearance.fillColor.setFill()
         bubble.fill()
+        appearance.strokeColor.setStroke()
+        bubble.stroke()
 
         let tail = NSBezierPath()
         tail.move(to: NSPoint(x: 142, y: 43))
         tail.line(to: NSPoint(x: 132, y: 58))
         tail.line(to: NSPoint(x: 151, y: 48))
         tail.close()
-        NSColor.white.withAlphaComponent(0.92).setFill()
+        appearance.fillColor.setFill()
         tail.fill()
+        appearance.strokeColor.setStroke()
+        tail.lineWidth = max(1, appearance.borderWidth - 0.2)
+        tail.stroke()
 
         let style = NSMutableParagraphStyle()
         style.alignment = .center
         let attributes: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 11, weight: .semibold),
-            .foregroundColor: NSColor(calibratedRed: 0.18, green: 0.22, blue: 0.20, alpha: 0.92),
+            .foregroundColor: appearance.textColor,
             .paragraphStyle: style
         ]
-        bubbleText.draw(in: bubbleRect.insetBy(dx: 8, dy: 7), withAttributes: attributes)
+        bubblePresentation.text.draw(in: bubbleRect.insetBy(dx: 8, dy: 7), withAttributes: attributes)
     }
 
-    private func drawEyes() {
+    private func drawEyes(using preset: ExpressionPreset) {
         let eyeColor = NSColor.white.withAlphaComponent(0.95)
-        let style = eyeStyle()
+        let style = preset.eye
         let leftEye = NSBezierPath(ovalIn: style.leftEyeRect)
         let rightEye = NSBezierPath(ovalIn: style.rightEyeRect)
         eyeColor.setFill()
@@ -168,8 +178,8 @@ final class PetView: NSView {
         drawEyeLids(for: style.rightEyeRect, overlayHeight: style.lidOverlayHeight)
         drawEyeSparkles(at: leftPupilOrigin, pupilSize: style.pupilSize, alpha: style.sparkleAlpha)
         drawEyeSparkles(at: rightPupilOrigin, pupilSize: style.pupilSize, alpha: style.sparkleAlpha)
-        drawExpressionAccent()
-        drawMouth()
+        drawExpressionAccent(using: preset)
+        drawMouth(using: preset)
 
         let nose = NSBezierPath()
         nose.move(to: NSPoint(x: 110, y: 124))
@@ -210,12 +220,12 @@ final class PetView: NSView {
         NSBezierPath(ovalIn: sparkleRect).fill()
     }
 
-    private func drawExpressionAccent() {
+    private func drawExpressionAccent(using preset: ExpressionPreset) {
         let strokeColor = NSColor.black.withAlphaComponent(0.22)
         strokeColor.setStroke()
 
-        switch attentionMode {
-        case .typing:
+        switch preset.accentStyle {
+        case .typingBrow:
             let leftBrow = NSBezierPath()
             leftBrow.lineWidth = 2
             leftBrow.move(to: NSPoint(x: 74, y: 96))
@@ -227,11 +237,7 @@ final class PetView: NSView {
             rightBrow.move(to: NSPoint(x: 120, y: 90))
             rightBrow.line(to: NSPoint(x: 146, y: 96))
             rightBrow.stroke()
-        case .waitingForResponse:
-            guard hasActiveGenerationPerformance else {
-                return
-            }
-
+        case .generationFocus:
             let focusMark = NSBezierPath()
             focusMark.lineWidth = 2
             focusMark.move(to: NSPoint(x: 108, y: 82))
@@ -239,13 +245,13 @@ final class PetView: NSView {
             focusMark.move(to: NSPoint(x: 118, y: 78))
             focusMark.line(to: NSPoint(x: 124, y: 70))
             focusMark.stroke()
-        case .idle:
+        case .none:
             return
         }
     }
 
-    private func drawMouth() {
-        switch mouthStyle {
+    private func drawMouth(using preset: ExpressionPreset) {
+        switch preset.mouth {
         case .focused:
             let mouth = NSBezierPath()
             mouth.lineWidth = 2
@@ -392,47 +398,7 @@ final class PetView: NSView {
         NSBezierPath(ovalIn: centerRect).fill()
     }
 
-    private func eyeStyle() -> EyeStyle {
-        let activePupilColor = permissionGranted ? NSColor.black.withAlphaComponent(0.85) : NSColor.systemOrange.withAlphaComponent(0.9)
-
-        switch attentionMode {
-        case .typing:
-            return EyeStyle(
-                leftEyeRect: NSRect(x: 74, y: 98, width: 30, height: 19),
-                rightEyeRect: NSRect(x: 116, y: 98, width: 30, height: 19),
-                pupilSize: NSSize(width: 8, height: 15),
-                maxOffsetX: 7,
-                maxOffsetY: 4.4,
-                pupilColor: activePupilColor,
-                lidOverlayHeight: 3,
-                sparkleAlpha: 0.04
-            )
-        case .waitingForResponse:
-            return EyeStyle(
-                leftEyeRect: NSRect(x: 73, y: 95, width: 31, height: generationPhase == .streaming ? 26 : 24),
-                rightEyeRect: NSRect(x: 116, y: 95, width: 31, height: generationPhase == .streaming ? 26 : 24),
-                pupilSize: hasActiveGenerationPerformance ? NSSize(width: 10, height: 15) : NSSize(width: 9, height: 14),
-                maxOffsetX: hasActiveGenerationPerformance ? 4.2 : 5.5,
-                maxOffsetY: hasActiveGenerationPerformance ? 3.4 : 4,
-                pupilColor: hasActiveGenerationPerformance ? activePupilColor.withAlphaComponent(0.9) : activePupilColor.withAlphaComponent(0.82),
-                lidOverlayHeight: hasActiveGenerationPerformance ? 2.5 : 4,
-                sparkleAlpha: generationPhase == .streaming ? 0.40 : 0.26
-            )
-        case .idle:
-            return EyeStyle(
-                leftEyeRect: NSRect(x: 74, y: 102, width: 30, height: 12),
-                rightEyeRect: NSRect(x: 116, y: 102, width: 30, height: 12),
-                pupilSize: NSSize(width: 7, height: 7),
-                maxOffsetX: 1,
-                maxOffsetY: 1,
-                pupilColor: activePupilColor.withAlphaComponent(0.5),
-                lidOverlayHeight: 6,
-                sparkleAlpha: 0
-            )
-        }
-    }
-
-    private func pupilOrigin(in eyeRect: NSRect, pupilSize: NSSize, style: EyeStyle) -> CGPoint {
+    private func pupilOrigin(in eyeRect: NSRect, pupilSize: NSSize, style: EyePreset) -> CGPoint {
         let neutralOrigin = CGPoint(
             x: eyeRect.midX - pupilSize.width / 2,
             y: eyeRect.midY - pupilSize.height / 2 + (attentionMode == .idle ? 1.5 : 0)
@@ -465,49 +431,54 @@ final class PetView: NSView {
         )
     }
 
-    private var hasActiveGenerationPerformance: Bool {
-        switch generationPhase {
-        case .preparing, .streaming, .settling:
-            return attentionMode == .waitingForResponse
-        case .inactive:
-            return false
+    private func resolveExpressionPreset() -> ExpressionPreset {
+        expressionPresetResolver.resolve(
+            attentionMode: attentionMode,
+            generationPhase: generationPhase,
+            permissionGranted: permissionGranted
+        )
+    }
+
+    private func bubblePresentation(for preset: ExpressionPreset) -> BubblePresentation? {
+        expressionRuntimeState.bubblePresentation(for: preset)
+    }
+
+    private func bubbleAppearance(for style: BubbleVisualStyle) -> BubbleAppearance {
+        switch style {
+        case .neutral:
+            return BubbleAppearance(
+                fillColor: NSColor.white.withAlphaComponent(0.92),
+                strokeColor: NSColor.black.withAlphaComponent(0.08),
+                textColor: NSColor(calibratedRed: 0.18, green: 0.22, blue: 0.20, alpha: 0.92),
+                borderWidth: 1
+            )
+        case .gentle:
+            return BubbleAppearance(
+                fillColor: NSColor(calibratedRed: 0.99, green: 0.95, blue: 0.86, alpha: 0.96),
+                strokeColor: NSColor(calibratedRed: 0.84, green: 0.72, blue: 0.46, alpha: 0.58),
+                textColor: NSColor(calibratedRed: 0.39, green: 0.31, blue: 0.18, alpha: 0.96),
+                borderWidth: 1.1
+            )
+        case .curious:
+            return BubbleAppearance(
+                fillColor: NSColor(calibratedRed: 0.90, green: 0.97, blue: 0.98, alpha: 0.96),
+                strokeColor: NSColor(calibratedRed: 0.38, green: 0.67, blue: 0.70, alpha: 0.55),
+                textColor: NSColor(calibratedRed: 0.16, green: 0.33, blue: 0.36, alpha: 0.96),
+                borderWidth: 1.2
+            )
+        case .pleased:
+            return BubbleAppearance(
+                fillColor: NSColor(calibratedRed: 0.99, green: 0.92, blue: 0.88, alpha: 0.96),
+                strokeColor: NSColor(calibratedRed: 0.86, green: 0.57, blue: 0.47, alpha: 0.56),
+                textColor: NSColor(calibratedRed: 0.42, green: 0.24, blue: 0.21, alpha: 0.95),
+                borderWidth: 1.15
+            )
         }
     }
 
-    private var bubbleText: String? {
-        guard hasActiveGenerationPerformance else {
-            return nil
-        }
-
-        switch generationPhase {
-        case .preparing:
-            return "在看"
-        case .streaming:
-            return "唔..."
-        case .settling:
-            return "嗯？"
-        case .inactive:
-            return nil
-        }
-    }
-
-    private var mouthStyle: MouthStyle {
-        switch attentionMode {
-        case .typing:
-            return .focused
-        case .waitingForResponse:
-            switch generationPhase {
-            case .streaming:
-                return .curiousOpen
-            case .settling:
-                return .softSmile
-            case .preparing:
-                return .curiousClosed
-            case .inactive:
-                return .curiousClosed
-            }
-        case .idle:
-            return .resting
+    private func configureExpressionRuntimeState() {
+        expressionRuntimeState.onPresentationInvalidated = { [weak self] in
+            self?.needsDisplay = true
         }
     }
 }

@@ -1,10 +1,14 @@
 import AppKit
 
 final class PetWindowController: NSWindowController {
-    private let petView = PetView(frame: NSRect(origin: .zero, size: NSSize(width: 220, height: 220)))
+    private let petView: PetView
     private let coordinateMapper = WindowCoordinateMapper()
 
-    init() {
+    init(textProvider: ExpressionTextProvider? = nil) {
+        self.petView = PetView(
+            frame: NSRect(origin: .zero, size: NSSize(width: 220, height: 220)),
+            textProvider: textProvider
+        )
         let window = PetWindow(frame: Self.defaultFrame())
         super.init(window: window)
 
