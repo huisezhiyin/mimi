@@ -1,0 +1,344 @@
+// !$*UTF8*$!
+{
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000001 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000101 /* main.swift */; };
+		000000000000000000000002 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000102 /* AppDelegate.swift */; };
+		000000000000000000000003 /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000103 /* MenuBarController.swift */; };
+		000000000000000000000004 /* PetWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000104 /* PetWindow.swift */; };
+		000000000000000000000005 /* PetWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000105 /* PetWindowController.swift */; };
+		000000000000000000000006 /* PetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000106 /* PetView.swift */; };
+		000000000000000000000007 /* AccessibilityPermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000107 /* AccessibilityPermissionService.swift */; };
+		000000000000000000000008 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 000000000000000000000109 /* Cocoa.framework */; };
+		000000000000000000000009 /* AccessibilityCursorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000110 /* AccessibilityCursorService.swift */; };
+		00000000000000000000000A /* MouseTrackingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000111 /* MouseTrackingService.swift */; };
+		00000000000000000000000B /* TrackingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000112 /* TrackingTarget.swift */; };
+		00000000000000000000000C /* WindowCoordinateMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000113 /* WindowCoordinateMapper.swift */; };
+		00000000000000000000000D /* ActivityMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000114 /* ActivityMonitorService.swift */; };
+		00000000000000000000000E /* CompanionStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000115 /* CompanionStateMachine.swift */; };
+		00000000000000000000000F /* ScreenCapturePermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000116 /* ScreenCapturePermissionService.swift */; };
+		000000000000000000000010 /* ScreenChangeMonitorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000117 /* ScreenChangeMonitorService.swift */; };
+		000000000000000000000011 /* GenerationSessionCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000118 /* GenerationSessionCoordinator.swift */; };
+		000000000000000000000012 /* TraceCodexProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000119 /* TraceCodexProvider.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		000000000000000000000101 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/App/main.swift; sourceTree = "<group>"; };
+		000000000000000000000102 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/App/AppDelegate.swift; sourceTree = "<group>"; };
+		000000000000000000000103 /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/MenuBar/MenuBarController.swift; sourceTree = "<group>"; };
+		000000000000000000000104 /* PetWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Window/PetWindow.swift; sourceTree = "<group>"; };
+		000000000000000000000105 /* PetWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Window/PetWindowController.swift; sourceTree = "<group>"; };
+		000000000000000000000106 /* PetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Character/PetView.swift; sourceTree = "<group>"; };
+		000000000000000000000107 /* AccessibilityPermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/AccessibilityPermissionService.swift; sourceTree = "<group>"; };
+		000000000000000000000108 /* mimi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mimi.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000109 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		00000000000000000000010A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = mimi/Info.plist; sourceTree = "<group>"; };
+		000000000000000000000110 /* AccessibilityCursorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Tracking/AccessibilityCursorService.swift; sourceTree = "<group>"; };
+		000000000000000000000111 /* MouseTrackingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Tracking/MouseTrackingService.swift; sourceTree = "<group>"; };
+		000000000000000000000112 /* TrackingTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Tracking/TrackingTarget.swift; sourceTree = "<group>"; };
+		000000000000000000000113 /* WindowCoordinateMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/WindowCoordinateMapper.swift; sourceTree = "<group>"; };
+		000000000000000000000114 /* ActivityMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/ActivityMonitorService.swift; sourceTree = "<group>"; };
+		000000000000000000000115 /* CompanionStateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/State/CompanionStateMachine.swift; sourceTree = "<group>"; };
+		000000000000000000000116 /* ScreenCapturePermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/ScreenCapturePermissionService.swift; sourceTree = "<group>"; };
+		000000000000000000000117 /* ScreenChangeMonitorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/ScreenChangeMonitorService.swift; sourceTree = "<group>"; };
+		000000000000000000000118 /* GenerationSessionCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/GenerationSessionCoordinator.swift; sourceTree = "<group>"; };
+		000000000000000000000119 /* TraceCodexProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mimi/Support/TraceCodexProvider.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		000000000000000000000301 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000008 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000201 = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000202 /* App */,
+				000000000000000000000203 /* MenuBar */,
+				000000000000000000000204 /* Window */,
+				000000000000000000000205 /* Character */,
+				000000000000000000000206 /* Support */,
+				00000000000000000000020A /* State */,
+				000000000000000000000209 /* Tracking */,
+				00000000000000000000010A /* Info.plist */,
+				000000000000000000000207 /* Frameworks */,
+				000000000000000000000208 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000202 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000101 /* main.swift */,
+				000000000000000000000102 /* AppDelegate.swift */,
+			);
+			name = App;
+			sourceTree = "<group>";
+		};
+		000000000000000000000203 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000103 /* MenuBarController.swift */,
+			);
+			name = MenuBar;
+			sourceTree = "<group>";
+		};
+		000000000000000000000204 /* Window */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000104 /* PetWindow.swift */,
+				000000000000000000000105 /* PetWindowController.swift */,
+			);
+			name = Window;
+			sourceTree = "<group>";
+		};
+		000000000000000000000205 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000106 /* PetView.swift */,
+			);
+			name = Character;
+			sourceTree = "<group>";
+		};
+		000000000000000000000206 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000107 /* AccessibilityPermissionService.swift */,
+				000000000000000000000113 /* WindowCoordinateMapper.swift */,
+				000000000000000000000114 /* ActivityMonitorService.swift */,
+				000000000000000000000116 /* ScreenCapturePermissionService.swift */,
+				000000000000000000000117 /* ScreenChangeMonitorService.swift */,
+				000000000000000000000118 /* GenerationSessionCoordinator.swift */,
+				000000000000000000000119 /* TraceCodexProvider.swift */,
+			);
+			name = Support;
+			sourceTree = "<group>";
+		};
+		000000000000000000000207 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000109 /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		000000000000000000000208 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000108 /* mimi.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000209 /* Tracking */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000110 /* AccessibilityCursorService.swift */,
+				000000000000000000000111 /* MouseTrackingService.swift */,
+				000000000000000000000112 /* TrackingTarget.swift */,
+			);
+			name = Tracking;
+			sourceTree = "<group>";
+		};
+		00000000000000000000020A /* State */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000115 /* CompanionStateMachine.swift */,
+			);
+			name = State;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		000000000000000000000401 /* mimi */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000602 /* Build configuration list for PBXNativeTarget "mimi" */;
+			buildPhases = (
+				000000000000000000000301 /* Frameworks */,
+				000000000000000000000302 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = mimi;
+			productName = mimi;
+			productReference = 000000000000000000000108 /* mimi.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000501 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					000000000000000000000401 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 000000000000000000000601 /* Build configuration list for PBXProject "mimi" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 000000000000000000000201;
+			productRefGroup = 000000000000000000000208 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				000000000000000000000401 /* mimi */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		000000000000000000000302 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000001 /* main.swift in Sources */,
+				000000000000000000000002 /* AppDelegate.swift in Sources */,
+				000000000000000000000003 /* MenuBarController.swift in Sources */,
+				000000000000000000000004 /* PetWindow.swift in Sources */,
+				000000000000000000000005 /* PetWindowController.swift in Sources */,
+				000000000000000000000006 /* PetView.swift in Sources */,
+				000000000000000000000007 /* AccessibilityPermissionService.swift in Sources */,
+				000000000000000000000009 /* AccessibilityCursorService.swift in Sources */,
+				00000000000000000000000A /* MouseTrackingService.swift in Sources */,
+				00000000000000000000000B /* TrackingTarget.swift in Sources */,
+				00000000000000000000000C /* WindowCoordinateMapper.swift in Sources */,
+				00000000000000000000000D /* ActivityMonitorService.swift in Sources */,
+				00000000000000000000000E /* CompanionStateMachine.swift in Sources */,
+				00000000000000000000000F /* ScreenCapturePermissionService.swift in Sources */,
+				000000000000000000000010 /* ScreenChangeMonitorService.swift in Sources */,
+				000000000000000000000011 /* GenerationSessionCoordinator.swift in Sources */,
+				000000000000000000000012 /* TraceCodexProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000701 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000702 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		000000000000000000000703 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = mimi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuyue.mimi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000704 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = mimi/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.wuyue.mimi;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000601 /* Build configuration list for PBXProject "mimi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000701 /* Debug */,
+				000000000000000000000702 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000602 /* Build configuration list for PBXNativeTarget "mimi" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000703 /* Debug */,
+				000000000000000000000704 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 000000000000000000000501 /* Project object */;
+}
